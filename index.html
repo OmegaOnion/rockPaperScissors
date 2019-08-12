@@ -8,6 +8,10 @@
 //hardcode
 ROUNDS = 5;
 
+//score - not used
+var wins = 0;
+var losses = 0;
+
 /**
 * generates a "random" move using math.random for the game rock paper scissors
 * returns the choice as a string
@@ -32,10 +36,10 @@ function calculateGameResult(playerSelection,computerSelection){
     playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.substring(1);
 
     // player loss message
-    let playerLose = (playerSelection,computerSelection) => {return "You lose! " + computerSelection
+    let playerLose = (playerSelection,computerSelection) => {losses++; return "You lose! " + computerSelection
      + " beats " + playerSelection};
     // player win message
-    let playerWin = (playerSelection,computerSelection) => {return "You win! " + playerSelection
+    let playerWin = (playerSelection,computerSelection) => {wins++; return "You win! " + playerSelection
      + " beats " + computerSelection};
     // draw message
     let draw = () => {return "Its a tie!"};
@@ -64,6 +68,8 @@ function calculateGameResult(playerSelection,computerSelection){
 
 function game(){
     // for every round
+    wins = 0;
+    losses = 0;
     for (var i = 0; i < ROUNDS; i++){
         // get player choice
         var playerSelection = window.prompt("Rock, paper or Scissors?");
