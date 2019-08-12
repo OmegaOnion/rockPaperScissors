@@ -1,0 +1,80 @@
+<html>
+<head>
+    <title> Rock paper scissors</title>
+</head>
+<body>
+<script>
+
+//hardcode
+ROUNDS = 5;
+
+/**
+* generates a "random" move using math.random for the game rock paper scissors
+* returns the choice as a string
+**/
+function computerPlay(){
+    let getRandomInt = max => {return Math.floor(Math.random() * Math.floor(max));};
+    var choices = ["Rock","Paper", "Scissors"];
+    return choices[getRandomInt(3)];
+}
+
+/**
+* gets the esult of the game
+* against a "computer" which chooses rock paper or scissors at random see: computerPlay()
+* playSelection the move a user makes must be a string = "rock" "paper" or "scissors"
+* not case sensitive
+* computerSelection output from computerPlay one of ["Rock","Paper", "Scissors"]
+* returns a string declaring the winner
+**/
+function calculateGameResult(playerSelection,computerSelection){
+    //format player choice to be 1 uppercase rest lower case
+    playerSelection = playerSelection.toLowerCase();
+    playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.substring(1);
+
+    // player loss message
+    let playerLose = (playerSelection,computerSelection) => {return "You lose! " + computerSelection
+     + " beats " + playerSelection};
+    // player win message
+    let playerWin = (playerSelection,computerSelection) => {return "You win! " + playerSelection
+     + " beats " + computerSelection};
+    // draw message
+    let draw = () => {return "Its a tie!"};
+
+    //holds results of game
+    var result;
+    // draw if the same choice
+    if (playerSelection === computerSelection) return draw();
+    // Player chose rock
+    if (playerSelection == "Rock"){
+        result = (computerSelection === "Scissors") ? playerWin(playerSelection,computerSelection) 
+        : playerLose(playerSelection,computerSelection);
+    }
+    // Player chose Scissors
+    if (playerSelection == "Scissors"){
+        result = (computerSelection === "Paper") ? playerWin(playerSelection,computerSelection) 
+        : playerLose(playerSelection,computerSelection);
+    }
+    //Player chose Paper
+    if (playerSelection == "Paper"){
+        result = (computerSelection === "Rock") ? playerWin(playerSelection,computerSelection) 
+        : playerLose(playerSelection,computerSelection);
+    }
+    return result;
+}
+
+function game(){
+    // for every round
+    for (var i = 0; i < ROUNDS; i++){
+        // get player choice
+        var playerSelection = window.prompt("Rock, paper or Scissors?");
+        //get computer choice
+        var computerSelection = computerPlay();
+        // get result
+        console.log(calculateGameResult(playerSelection,computerSelection));
+    }
+}
+
+
+</script>
+</body>
+</html>
