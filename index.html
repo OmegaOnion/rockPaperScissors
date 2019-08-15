@@ -1,17 +1,27 @@
 <html>
 <head>
     <title> Rock paper scissors</title>
+    <style>
+        #wins{
+            color:green;
+            display:inline;
+            padding:2px;
+        }
+        #losses{
+            color:red;
+            display:inline;
+            padding:2px;
+        }
+    </style>
 </head>
-<body>
+<body onload="onLoad()">
 <script>
-
 //hardcode
 ROUNDS = 5;
 
 //score - not used
 var wins = 0;
 var losses = 0;
-
 /**
 * generates a "random" move using math.random for the game rock paper scissors
 * returns the choice as a string
@@ -21,9 +31,8 @@ function computerPlay(){
     var choices = ["Rock","Paper", "Scissors"];
     return choices[getRandomInt(3)];
 }
-
 /**
-* gets the esult of the game
+* gets the result of the game
 * against a "computer" which chooses rock paper or scissors at random see: computerPlay()
 * playSelection the move a user makes must be a string = "rock" "paper" or "scissors"
 * not case sensitive
@@ -39,8 +48,7 @@ function calculateGameResult(playerSelection,computerSelection){
     let playerLose = (playerSelection,computerSelection) => {losses++; return "You lose! " + computerSelection
      + " beats " + playerSelection};
     // player win message
-    let playerWin = (playerSelection,computerSelection) => {wins++; return "You win! " + playerSelection
-     + " beats " + computerSelection};
+    let playerWin = (playerSelection,computerSelection) => {wins++; return "You win! " + playerSelection+ " beats " + computerSelection};
     // draw message
     let draw = () => {return "Its a tie!"};
 
@@ -80,7 +88,40 @@ function game(){
     }
 }
 
+function playRound(){
+    var playerMove = document.getElementById("enter").value;
+    var computerMove = computerPlay();
+    var result = calculateGameResult(playerMove,computerMove);
+    addResults(result);
+    }
 
+function addResults(text){
+    var results = document.getElementById("results");
+    var result = document.createElement('div');
+    result.innerHTML = text;
+    results.appendChild(result);
+    //score
+    document.getElementById("wins").innerHTML = "Wins: " + wins;
+    document.getElementById("losses").innerHTML = "Losses: " + losses;
+}
+
+function onLoad(){
+    //button event listener
+    document.getElementById("go").addEventListener("click",playRound);
+}
 </script>
+
+<select id="enter">
+    <option value="Rock">Rock</option>
+    <option value="Paper">Paper</option>
+    <option value="Scissors">Scissors</option>
+</select>
+<button id="go">Play</button>
+
+<div id="results">
+    <h2>Results:</h2>
+    <div id="wins">Wins: 0</div>
+    <div id="losses">Losses: 0</div>
+</div>
 </body>
 </html>
